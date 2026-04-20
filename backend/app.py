@@ -173,6 +173,41 @@ def save_preferences():
 
 
 # ---------------------------------------------------------------------------
+# MATCHING — simple +1 per matching preference field (0..3)
+# ---------------------------------------------------------------------------
+
+@app.route("/api/matches/<int:user_id>", methods=["GET"])
+def get_matches(user_id):
+    me = StudyPreference.query.filter_by(user_id=user_id).first()
+    if not me:
+        return jsonify([])
+
+    others = (
+        db.session.query(StudyPreference, User)
+        .join(User, User.user_id == StudyPreference.user_id)
+        .filter(StudyPreference.user_id != user_id)
+        .all()
+    )
+
+    results = []
+    for pref, user in others:
+        score = (
+            (1 if pref.group_size  == me.group_size  else 0)
+            + (1 if pref.study_time  == me.study_time  else 0)
+            + (1 if pref.noise_level == me.noise_level else 0)
+        )
+        results.append({
+            "user_id": user.user_id,
+            "name": user.name,
+            "email": user.email,
+            "score": score,
+        })
+
+    results.sort(key=lambda r: r["score"], reverse=True)
+    return jsonify(results[:5])
+
+
+# ---------------------------------------------------------------------------
 # RAW SQL QUERY (SELECT only, for the database demo)
 # ---------------------------------------------------------------------------
 

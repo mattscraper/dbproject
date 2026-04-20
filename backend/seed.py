@@ -48,15 +48,15 @@ MEMBERSHIPS = [
 
 PREFS = [
     # user_index, group_size, study_time, noise_level
-    (0, "small",  "evening",   "quiet"),
+    (0, "small",  "night",     "silent"),
     (1, "medium", "morning",   "moderate"),
-    (2, "small",  "evening",   "quiet"),
+    (2, "small",  "night",     "silent"),     # perfect match with Alice
     (3, "large",  "afternoon", "moderate"),
-    (4, "medium", "evening",   "quiet"),
-    (5, "small",  "morning",   "quiet"),
+    (4, "medium", "night",     "silent"),     # strong (2) match with Alice
+    (5, "small",  "morning",   "silent"),     # strong (2) match with Alice
     (6, "large",  "afternoon", "loud"),
-    (7, "medium", "evening",   "moderate"),
-    (8, "small",  "morning",   "quiet"),
+    (7, "medium", "night",     "moderate"),
+    (8, "small",  "morning",   "silent"),     # strong (2) match with Alice
     (9, "medium", "afternoon", "moderate"),
 ]
 
